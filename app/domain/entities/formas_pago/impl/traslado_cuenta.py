@@ -1,9 +1,20 @@
 from ..forma_pago import FormaPago
-from ...cuentas import Cuenta
+from ...cuentas import Cuenta, Extracto
+from ...cajas import Provision, Movimiento
 
 
 class TrasladoCuenta(FormaPago):
     def __init__(self, valor: float, cuenta: Cuenta):
-        super().__init__("Traslado de Cuenta")
-        self.valor = valor
+        super().__init__("Traslado de Cuenta", valor)
         self.cuenta = cuenta
+
+    def procesar_pago(self, provision: Provision, movimiento: Movimiento):
+        if self.cuenta is None:
+            raise Exception("Debe especificar la cuenta a la que se hace el traslado.")
+
+        extracto = Extracto(self.valor, 0.00, movimiento.comprobante)
+        extracto.cuenta = self.cuenta
+        extracto.formas_pago.append(self)
+
+        super().procesar_pago(provision, movimiento)
+

@@ -1,9 +1,13 @@
-from .provision import Provision
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from ..formas_pago import FormaPago
 
+if TYPE_CHECKING:
+    from .provision import Provision
 
 class Movimiento:
-    contador_movimientos = 0
+    contador_movimientos = 1
 
     def __init__(
             self, 

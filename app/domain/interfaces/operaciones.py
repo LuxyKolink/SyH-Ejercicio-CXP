@@ -8,11 +8,11 @@ SUCURSAL = 'BU'
 
 
 class Operaciones:
-    def aperturar_caja(self, caja: Caja, valor_inicial: float):
+    def aperturar_caja(self, caja: Caja, valor_inicial: float) -> Provision:
         provision = Provision(caja, valor_inicial)
         return provision
     
-    def realizar_retiro(self, provision: Provision, formas_pago: list[FormaPago]):
+    def realizar_retiro(self, provision: Provision, formas_pago: list[FormaPago]) -> Movimiento:
         valor_total = sum(forma_pago.valor for forma_pago in formas_pago)
         if not provision.permite_retirar(valor_total):
             raise Exception("No se permite retiro de dinero si el valor es superior al saldo disponible en Efectivo")
@@ -26,7 +26,11 @@ class Operaciones:
             forma_pago.procesar_pago(provision, movimiento)
 
         provision.agregar_movimiento(movimiento)
+        return movimiento
         
 
     def realizar_consignacion(self, provision: Provision, formas_pago: list[FormaPago]):
         pass
+
+
+operaciones_caja = Operaciones()

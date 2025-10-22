@@ -1,6 +1,9 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 from abc import ABC, abstractmethod
 
-from ..cajas import Provision, Movimiento
+if TYPE_CHECKING:
+    from ..cajas import Provision, Movimiento
 
 
 class FormaPago(ABC):

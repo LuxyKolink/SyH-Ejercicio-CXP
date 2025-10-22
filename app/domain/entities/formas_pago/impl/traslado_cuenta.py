@@ -1,6 +1,11 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from ..forma_pago import FormaPago
-from ...cuentas import Cuenta, Extracto
 from ...cajas import Provision, Movimiento
+
+if TYPE_CHECKING:
+    from ...cuentas import Cuenta, Extracto
 
 
 class TrasladoCuenta(FormaPago):
